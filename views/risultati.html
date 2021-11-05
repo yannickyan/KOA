@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script  type="text/javascript">
+
+    async function my_code(){
+      // alert("yan");
+
+    let sleep= ms => new Promise(resolve => setTimeout(resolve, ms));
+    while(true)
+    {
+        $.ajax({ 
+        type: "get",
+        url: "http://localhost:3000/risultati.html?bol=true"
+         }).done(function(data){
+       var risultato = JSON.parse(data);
+       risultati=risultato.partie.split(",");
+       var val="";
+       risultati.forEach(element => {
+           console.log(element);
+           //$("#render").("<div>"+element+"</div>");
+           val=val+'<p>'+element+'</p>';
+           
+       });
+       document.getElementById("render").innerHTML=val;
+       document.getElementById("list").hidden=true;
+          });
+      await sleep(10000);
+    }
+    
+    }
+     window.onload=my_code();
+    </script>
+
+</head>
+<body >
+    <div id=render></div>
+   <ul id=list class="list-group">
+    <% render.forEach(valore => { %>
+        <li class="list-group-item">
+         <%= valore %>
+        </li>
+
+    <% });%>
+   </ul> 
+  
+</body>
+</html>
